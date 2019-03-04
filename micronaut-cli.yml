@@ -1,0 +1,5 @@
+profile: function-aws
+defaultPackage: com.alimmit
+---
+testFramework: junit
+sourceLanguage: java
