@@ -15,8 +15,8 @@ public class InstitutionSearchFunctionTest {
 
         InstitutionSearchClient client = server.getApplicationContext().getBean(InstitutionSearchClient.class);
 
-        assertTrue(StringUtils.isNotEmpty(client.apply(new InstitutionSearch("Wells*")).blockingGet()));
-        System.out.println(client.apply(new InstitutionSearch("Wells*")).blockingGet());
+        assertTrue(StringUtils.isNotEmpty(client.apply(new InstitutionSearch("Wells*", new String[] {"NAME", "ZIP"})).blockingGet()));
+        System.out.println(client.apply(new InstitutionSearch("Wells*", new String[] {"NAME", "ZIP"})).blockingGet());
         server.stop();
     }
 }

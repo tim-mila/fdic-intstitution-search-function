@@ -1,5 +1,7 @@
 package com.alimmit;
 
+import com.alimmit.query.FdicQuery;
+import com.alimmit.query.Filter;
 import io.micronaut.function.FunctionBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,14 +13,14 @@ public class InstitutionSearchFunction implements Function<InstitutionSearch, St
 
     private static final Logger LOG = LoggerFactory.getLogger(InstitutionSearchFunction.class);
 
-    private final FdicClient fdicClient;
-
-    public InstitutionSearchFunction(final FdicClient fdicClient) {
-        this.fdicClient = fdicClient;
-    }
-
     @Override
     public String apply(final InstitutionSearch search) {
-        return fdicClient.query(search.getQ());
+        final FdicQuery query = FdicQuery.from(Endpoint.Institution)
+                .filter(Filter.and(Filter.value("ACTIVE", "1"), Filter.value("NAME", search.getQ())));
+
+        if (null != search.getFields() && search.getFields().length > 0) {
+            query.fields(search.getFields());
+        }
+        return new FdicClient().query(query);
     }
 }
