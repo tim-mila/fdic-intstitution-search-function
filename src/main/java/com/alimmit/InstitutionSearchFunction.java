@@ -16,7 +16,7 @@ public class InstitutionSearchFunction implements Function<InstitutionSearch, St
     @Override
     public String apply(final InstitutionSearch search) {
         final FdicQuery query = FdicQuery.from(Endpoint.Institution)
-                .filter(Filter.and(Filter.value("ACTIVE", "1"), Filter.value("NAME", search.getQ())));
+                .filter(Filter.and(Filter.value("ACTIVE", "1"), Filter.value("NAME", search.getQ()))).sortBy("NAME").sortOrder(FdicQuery.SortOrder.ASC);
 
         if (null != search.getFields() && search.getFields().length > 0) {
             query.fields(search.getFields());
